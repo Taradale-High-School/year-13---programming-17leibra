@@ -18,20 +18,17 @@ public class compassRotate : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Debug.Log("z");
+        { 
             float currentRot = compass.transform.rotation.eulerAngles.z;
             compass.transform.eulerAngles= new Vector3(0,0,(currentRot+20)); 
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            Debug.Log("x");
             float currentRot = compass.transform.rotation.eulerAngles.z;
             compass.transform.eulerAngles = new Vector3(0, 0, (currentRot - 20)); 
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log("c");
             compass.transform.rotation = compassStartRot; 
         }
     }

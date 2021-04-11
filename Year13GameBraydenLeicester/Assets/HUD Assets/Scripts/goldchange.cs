@@ -17,8 +17,8 @@ public class goldchange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W)) { goldAmount += 1; }
-        if (Input.GetKeyDown(KeyCode.S)) { goldAmount -= 1; }
+        if (Input.GetKeyDown(KeyCode.I)) { goldAmount += 1; }
+        if (Input.GetKeyDown(KeyCode.K)) { goldAmount -= 1; }
         txt.text = goldAmount.ToString();
     }
 }
