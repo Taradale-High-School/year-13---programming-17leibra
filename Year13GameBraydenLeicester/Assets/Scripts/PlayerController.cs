@@ -10,8 +10,11 @@ public class PlayerController : MonoBehaviour
     public float mouseSensitivity = 200f;
     public float gravityAccleration = -9.81f;
     public float jumpHeight = 4f;
+    public float swingSmooth = 1f;
 
     private Vector3 velocity;
+    private Quaternion swordTargetRotation;
+    private Quaternion swordStartingRotation;
 
     public float groundDistance = 0.3f;
 
@@ -22,12 +25,16 @@ public class PlayerController : MonoBehaviour
     public CharacterController controller;
     public Transform groundCheck;
     public LayerMask groundMask;
+    public Transform compass;
+    public GameObject rightHand;
 
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        swordStartingRotation = rightHand.transform.localRotation;
+        swordTargetRotation = rightHand.transform.localRotation;
     }
 
     // Update is called once per frame
@@ -44,7 +51,8 @@ public class PlayerController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        transform.Rotate(Vector3.up * mouseX); //rotates player
+        transform.Rotate(Vector3.up * mouseX); //rotates player around y axis due to x pos of mouse
+        compass.Rotate(Vector3.forward * -mouseX);// roates the comapass 
 
         //sets and clamps camera rotaion, and rotates the camera
         xRotation -= mouseY;
@@ -67,7 +75,18 @@ public class PlayerController : MonoBehaviour
         }
         velocity.y += gravityAccleration * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        
+
+        if (Input.GetButtonDown("Fire2") && rightHand.transform.localRotation == swordStartingRotation)
+        {
+            swordTargetRotation *= Quaternion.AngleAxis(90, Vector3.right);
+            swordTargetRotation *= Quaternion.AngleAxis(30, Vector3.forward);
+        }
+        if (rightHand.transform.localRotation == swordTargetRotation)
+        {
+            swordTargetRotation = swordStartingRotation;
+        }
+        rightHand.transform.localRotation = Quaternion.Lerp(rightHand.transform.localRotation, swordTargetRotation, 10 * swingSmooth * Time.deltaTime);
+
 
     }
 }
