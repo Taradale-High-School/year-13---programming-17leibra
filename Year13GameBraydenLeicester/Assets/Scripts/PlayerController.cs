@@ -7,21 +7,21 @@ public class PlayerController : MonoBehaviour
     //speed vars for the movements
     private float moveSpeed = 5;
     private float xRotation = 0f;
-    public float mouseSensitivity = 800f;
+    public float mouseSensitivity = 200f;
     public float gravityAccleration = -9.81f;
+    public float jumpHeight = 4f;
 
     private Vector3 velocity;
 
-    public float groundDistance = 0.3f; 
+    public float groundDistance = 0.3f;
+
+    public bool isGronded;
 
     //Object refeferences 
     public Transform cameraTransform;
     public CharacterController controller;
     public Transform groundCheck;
-    public LayerMask ground;
-
-   
-
+    public LayerMask groundMask;
 
 
     // Start is called before the first frame update
@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGronded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGronded && velocity.y<0)
+        {
+            velocity.y = -2f;
+        }
+
         //gets mouse position
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -52,8 +59,15 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(totalMove); // moves through character controller component
 
-        velocity.y += gravityAccleration * Time.deltaTime;
+       
 
-        controller.Move(velocity * Time.deltaTime);  
+        if (Input.GetButtonDown("Jump") && isGronded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityAccleration);
+        }
+        velocity.y += gravityAccleration * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+        
+
     }
 }
