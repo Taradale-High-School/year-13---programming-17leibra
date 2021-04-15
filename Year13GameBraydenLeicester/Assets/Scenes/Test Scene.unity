@@ -2982,12 +2982,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b8d88bf2f7cf848a8acaad296f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 200
   gravityAccleration: -9.81
   jumpHeight: 4
-  swingSmooth: 1
+  swingSpeed: 10
+  sheildMoveSpeed: 10
   groundDistance: 0.3
   isGronded: 0
+  isBlocking: 0
   cameraTransform: {fileID: 963194228}
   controller: {fileID: 1655545638}
   groundCheck: {fileID: 550469553}
@@ -2996,6 +2997,7 @@ MonoBehaviour:
     m_Bits: 256
   compass: {fileID: 129900093}
   rightHand: {fileID: 2124700512}
+  leftHand: {fileID: 885445255}
 --- !u!143 &1655545638
 CharacterController:
   m_ObjectHideFlags: 0
