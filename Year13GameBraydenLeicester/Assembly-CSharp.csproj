@@ -66,7 +66,7 @@
     <Compile Include="Assets\HUD Assets\Scripts\compassRotate.cs" />
     <Compile Include="Assets\HUD Assets\Scripts\goldchange.cs" />
     <Compile Include="Assets\HUD Assets\Scripts\healthBarMove.cs" />
-    <Compile Include="Assets\Scripts\HandRotate.cs" />
+    <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
