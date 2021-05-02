@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     //Object References
+    public GameObject body;
     public GameObject hand;
     public GameObject playerObject;
+    public GameObject[] markers;
 
     //Position var
     private Vector3 targetPosition;
@@ -16,47 +18,30 @@ public class EnemyBehaviour : MonoBehaviour
     public bool playerClose = false;
 
     //floats
-    public float enemyMoveSpeed = 10;
+    public float enemyMoveSpeed = 1;
     
     // Start is called before the first frame update
     void Start()
     {
-        startingPosition = transform.position;
-        targetPosition = transform.position;
+        startingPosition = body.transform.position;
+        targetPosition = body.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (targetPosition == transform.position)
+        if (body.transform.localPosition == targetPosition)
         {
-            Debug.Log("positions same");
-            if (Vector3.Distance(playerObject.transform.position, transform.position)< 10)
-            {
-                playerClose = true;
-                DecidePosition(0,0);
-            }
-            else
-            {
-                playerClose = false;
-                DecidePosition(-10, 10);
-            }
+            int chosenMaker = Random.Range(0, markers.Length);
+            Debug.Log(chosenMaker);
+            targetPosition = markers[chosenMaker].transform.localPosition;
         }
-        transform.position = Vector3.Lerp(transform.position, targetPosition, enemyMoveSpeed * Time.deltaTime);
-        //transform.position = Vector3.RotateTowards(transform.position, targetPosition,2*Mathf.PI, 10f);
-
+        body.transform.localPosition = Vector3.Lerp(body.transform.localPosition, targetPosition, Time.deltaTime * enemyMoveSpeed);
     }
 
-    void DecidePosition( int minDist, int maxDist)
+    void DecidePosition()
     {
-        if (playerClose)
-        {
-            targetPosition = new Vector3(playerObject.transform.position.x, transform.position.y, playerObject.transform.position.z);
-        }
-        else
-        {
-            targetPosition = new Vector3(transform.position.x + Random.Range(minDist, maxDist), transform.position.y, transform.position.z + Random.Range(minDist, maxDist));
-        }
+        
         
     }
 }
