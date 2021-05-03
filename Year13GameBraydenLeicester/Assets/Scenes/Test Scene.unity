@@ -1882,6 +1882,8 @@ MonoBehaviour:
   - {fileID: 1796941447}
   playerClose: 0
   enemyMoveSpeed: 1
+  playerRange: 10
+  swingSpeed: 10
 --- !u!1 &784908249
 GameObject:
   m_ObjectHideFlags: 0
