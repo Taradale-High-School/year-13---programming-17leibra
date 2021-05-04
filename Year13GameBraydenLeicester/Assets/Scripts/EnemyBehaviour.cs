@@ -20,15 +20,15 @@ public class EnemyBehaviour : MonoBehaviour
     public bool playerClose = false;
 
     //floats
-    public float enemyMoveSpeed = 1;
-    public float playerRange = 10;
-    public float swingSpeed = 10;
+    public float enemyMoveSpeed;
+    public float playerRange;
+    public float swingSpeed;
     
     // Start is called before the first frame update
     void Start()
     {
         startingPosition = body.transform.position;
-        targetPosition = body.transform.localPosition;
+        targetPosition = body.transform.position;
         swordStartingRotation = hand.transform.localRotation;
         swordTargetRotation = hand.transform.localRotation;
     }
@@ -40,19 +40,21 @@ public class EnemyBehaviour : MonoBehaviour
         if (playerDist < playerRange) { playerClose = true; } else { playerClose = false; }// decides if the player is in range
         
         //decides position and movement
-        if (Vector3.Distance(body.transform.localPosition, targetPosition) < 0.1f && !playerClose)
+        if (Vector3.Distance(body.transform.position, targetPosition) < 1f && !playerClose) //LERP never gets to position, so just needs to be close
         {
-            int chosenMaker = Random.Range(0, markers.Length);
-            Debug.Log(chosenMaker);
-            targetPosition = markers[chosenMaker].transform.localPosition;
-            body.transform.LookAt(markers[chosenMaker].transform);
+            int chosenMaker = Random.Range(0, markers.Length); //gets a random index 
+            Debug.Log(chosenMaker); 
+            targetPosition = markers[chosenMaker].transform.position; // sets target as position of marker
+            body.transform.LookAt(markers[chosenMaker].transform);//turns towards marker
+            //body.transform.localPosition = Vector3.MoveTowards(body.transform.localPosition, targetPosition, 1 * enemyMoveSpeed * Time.deltaTime);
+
         } else if (playerClose)
         {
-            body.transform.LookAt(playerObject.transform);
-            targetPosition = body.transform.localPosition;
-            body.transform.localPosition = Vector3.MoveTowards(body.transform.localPosition, playerObject.transform.position, 1 * enemyMoveSpeed * Time.deltaTime);  
+            body.transform.LookAt(playerObject.transform);// turns towards player
+            targetPosition = playerObject.transform.position;// sets target position to its own position to cancel LERP
+            //body.transform.localPosition = Vector3.MoveTowards(body.transform.localPosition, playerObject.transform.position, 1 * enemyMoveSpeed * Time.deltaTime);  //moves towards player
         }
-        body.transform.localPosition = Vector3.Lerp(body.transform.localPosition, targetPosition, Time.deltaTime * enemyMoveSpeed);
+        body.transform.position = Vector3.Lerp(body.transform.position, targetPosition, Time.deltaTime * enemyMoveSpeed);
 
         //player close and at ready rot, the target rotation of the sword changes
         if (playerClose && hand.transform.localRotation == swordStartingRotation)
