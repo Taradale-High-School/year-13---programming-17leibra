@@ -23,7 +23,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float enemyMoveSpeed;
     public float playerRange;
     public float swingSpeed;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,23 +38,22 @@ public class EnemyBehaviour : MonoBehaviour
     {
         float playerDist = Vector3.Distance(body.transform.position, playerObject.transform.position); // gets distance to player
         if (playerDist < playerRange) { playerClose = true; } else { playerClose = false; }// decides if the player is in range
-        
+
         //decides position and movement
         if (Vector3.Distance(body.transform.position, targetPosition) < 1f && !playerClose) //LERP never gets to position, so just needs to be close
         {
             int chosenMaker = Random.Range(0, markers.Length); //gets a random index 
-            Debug.Log(chosenMaker); 
+            Debug.Log(chosenMaker);
             targetPosition = markers[chosenMaker].transform.position; // sets target as position of marker
             body.transform.LookAt(markers[chosenMaker].transform);//turns towards marker
-            //body.transform.localPosition = Vector3.MoveTowards(body.transform.localPosition, targetPosition, 1 * enemyMoveSpeed * Time.deltaTime);
 
-        } else if (playerClose)
+        }
+        else if (playerClose)
         {
             body.transform.LookAt(playerObject.transform);// turns towards player
             targetPosition = playerObject.transform.position;// sets target position to its own position to cancel LERP
-            //body.transform.localPosition = Vector3.MoveTowards(body.transform.localPosition, playerObject.transform.position, 1 * enemyMoveSpeed * Time.deltaTime);  //moves towards player
         }
-        body.transform.position = Vector3.Lerp(body.transform.position, targetPosition, Time.deltaTime * enemyMoveSpeed);
+        body.transform.position = Vector3.Lerp(body.transform.position, targetPosition, Time.deltaTime * enemyMoveSpeed); // moves the body to the target pos smoothly
 
         //player close and at ready rot, the target rotation of the sword changes
         if (playerClose && hand.transform.localRotation == swordStartingRotation)
@@ -75,4 +74,5 @@ public class EnemyBehaviour : MonoBehaviour
 
     }
 
+    
 }

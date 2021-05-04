@@ -130,4 +130,15 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            Debug.Log("Sword hit enemy");
+            Destroy(collision.gameObject);
+        }
+    }*/
+
+    
 }
