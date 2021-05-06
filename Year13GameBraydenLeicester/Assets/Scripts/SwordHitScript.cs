@@ -17,7 +17,7 @@ public class SwordHitScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Into the on trigger and tag is:" + other.tag);
+        Debug.Log("Into the on trigger and tag is: " + other.tag);
         if (other.CompareTag("enemy"))
         {
             Debug.Log("Sword hit enemy");
