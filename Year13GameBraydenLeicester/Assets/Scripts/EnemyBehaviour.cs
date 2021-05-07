@@ -9,6 +9,7 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject hand;
     public GameObject playerObject;
     public GameObject[] markers;
+    private Rigidbody rb;
 
     //Position var
     private Vector3 targetPosition;
@@ -27,6 +28,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = body.GetComponent<Rigidbody>();
         startingPosition = body.transform.position;
         targetPosition = body.transform.position;
         swordStartingRotation = hand.transform.localRotation;
@@ -46,6 +48,7 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.Log(chosenMaker);
             targetPosition = markers[chosenMaker].transform.position; // sets target as position of marker
             body.transform.LookAt(markers[chosenMaker].transform);//turns towards marker
+            //rb.velocity = rb.velocity + new Vector3(0, 0, enemyMoveSpeed * Time.deltaTime);
 
         }
         else if (playerClose)
@@ -54,6 +57,7 @@ public class EnemyBehaviour : MonoBehaviour
             targetPosition = playerObject.transform.position;// sets target position to its own position to cancel LERP
         }
         body.transform.position = Vector3.Lerp(body.transform.position, targetPosition, Time.deltaTime * enemyMoveSpeed); // moves the body to the target pos smoothly
+        
 
         //player close and at ready rot, the target rotation of the sword changes
         if (playerClose && hand.transform.localRotation == swordStartingRotation)
