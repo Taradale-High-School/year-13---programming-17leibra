@@ -9,7 +9,7 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject hand;
     public GameObject playerObject;
     public GameObject[] markers;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     //Position var
     private Vector3 targetPosition;
@@ -38,6 +38,10 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (body == null)
+        {
+            Destroy(gameObject);
+        }
         float playerDist = Vector3.Distance(body.transform.position, playerObject.transform.position); // gets distance to player
         if (playerDist < playerRange) { playerClose = true; } else { playerClose = false; }// decides if the player is in range
 
