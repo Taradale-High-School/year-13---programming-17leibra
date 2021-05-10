@@ -857,6 +857,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6162139157539964391, guid: a111dd65ba9ff9c479768502a8a3526f,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1655545636}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a111dd65ba9ff9c479768502a8a3526f, type: 3}
 --- !u!1 &550469552
@@ -2600,7 +2605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 2124700512}
-  player: {fileID: 0}
+  player: {fileID: 1655545636}
+  playerScript: {fileID: 0}
   isSwinging: 0
 --- !u!1 &1205504208
 GameObject:
@@ -3988,5 +3994,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6162139157539964391, guid: a111dd65ba9ff9c479768502a8a3526f,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1655545636}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a111dd65ba9ff9c479768502a8a3526f, type: 3}

@@ -40,7 +40,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (body == null)
         {
-            Destroy(gameObject);
+            Destroy(gameObject);// destorys the whole enemy game object if the body gets destroyed, by a sword
         }
         float playerDist = Vector3.Distance(body.transform.position, playerObject.transform.position); // gets distance to player
         if (playerDist < playerRange) { playerClose = true; } else { playerClose = false; }// decides if the player is in range
@@ -52,8 +52,7 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.Log(chosenMaker);
             targetPosition = markers[chosenMaker].transform.position; // sets target as position of marker
             body.transform.LookAt(markers[chosenMaker].transform);//turns towards marker
-            //rb.velocity = rb.velocity + new Vector3(0, 0, enemyMoveSpeed * Time.deltaTime);
-
+           
         }
         else if (playerClose)
         {
