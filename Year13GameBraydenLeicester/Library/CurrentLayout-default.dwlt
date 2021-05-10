@@ -116,7 +116,7 @@ MonoBehaviour:
   m_MinSize: {x: 709, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 138
+  controlID: 111
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 97
+  controlID: 47
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -368,16 +368,16 @@ MonoBehaviour:
   m_ShowContextualTools: 0
   m_WindowGUID: 7e11327ad09be584d9f53dfc30fcc230
   m_Gizmos: 1
-  m_SceneIsLit: 1
+  m_SceneIsLit: 0
   m_SceneLighting: 1
   m_2DMode: 0
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.6573567, y: 8.782688, z: -15.974299}
+    m_Target: {x: 29.57, y: 1.3935, z: 16.99}
     speed: 2
-    m_Value: {x: 0.6573567, y: 8.782688, z: -15.974299}
+    m_Value: {x: 29.57, y: 1.3935, z: 16.99}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_SceneViewState:
     showFog: 1
     showMaterialUpdate: 0
-    showSkybox: 1
+    showSkybox: 0
     showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
@@ -427,9 +427,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.33147058, y: 0.114768416, z: -0.040678106, w: 0.9355751}
   m_Size:
-    m_Target: 1.0466464
+    m_Target: 14.255619
     speed: 2
-    m_Value: 1.0466464
+    m_Value: 14.255619
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -485,21 +485,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 6afbffffaa340000343500005235000084350000
+      m_ExpandedIDs: 54520000585200007c520000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Marker1
+        m_OriginalName: Marker1
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 20688
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -548,20 +548,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 60
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts
   m_LastFoldersGridSize: 60
   m_LastProjectPath: H:\GitHub\year-13---programming-17leibra\Year13GameBraydenLeicester
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: f04a0000
-    m_LastClickedID: 19184
-    m_ExpandedIDs: 00000000de35000000ca9a3b
+    m_SelectedIDs: f0350000
+    m_LastClickedID: 13808
+    m_ExpandedIDs: 00000000e435000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -589,7 +589,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000de350000
+    m_ExpandedIDs: 00000000e4350000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
