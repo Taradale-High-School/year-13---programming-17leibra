@@ -108,6 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 4182176589135155003}
+  player: {fileID: 0}
+  playerScript: {fileID: 0}
   isSwinging: 0
 --- !u!1 &4182176589078529463
 GameObject:

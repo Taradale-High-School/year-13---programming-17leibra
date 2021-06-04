@@ -67,6 +67,7 @@
     <Compile Include="Assets\HUD Assets\Scripts\goldchange.cs" />
     <Compile Include="Assets\HUD Assets\Scripts\healthBarMove.cs" />
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\EnemyWalk.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SwordHitScript.cs" />
     <Reference Include="UnityEngine">
