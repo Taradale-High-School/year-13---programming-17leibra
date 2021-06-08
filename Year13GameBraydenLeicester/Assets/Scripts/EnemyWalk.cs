@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EnemyWalk : MonoBehaviour
 {
+    //floats
     float speed = 10;
     float armDeclanation = 20;
+    float legSwing = 20;
+    float armSwing = 20;
+
     //object References
     public GameObject legLeft;
     public GameObject legRight;
@@ -33,51 +37,55 @@ public class EnemyWalk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        legLeft.transform.eulerAngles = new Vector3(legLeft.transform.eulerAngles.x + 20, legLeft.transform.eulerAngles.y, legLeft.transform.eulerAngles.z);
-        LLForwardRot = legLeft.transform.localRotation;
-        legLeft.transform.eulerAngles = new Vector3(legLeft.transform.eulerAngles.x - 40, legLeft.transform.eulerAngles.y, legLeft.transform.eulerAngles.z);
-        LLBackRot = legLeft.transform.localRotation;
+        //left leg starting rots
+        legLeft.transform.eulerAngles = new Vector3(legLeft.transform.eulerAngles.x + legSwing, legLeft.transform.eulerAngles.y, legLeft.transform.eulerAngles.z); //sets rotation to foward
+        LLForwardRot = legLeft.transform.localRotation; //sets the forward rot for later
+        legLeft.transform.eulerAngles = new Vector3(legLeft.transform.eulerAngles.x - 2*legSwing, legLeft.transform.eulerAngles.y, legLeft.transform.eulerAngles.z); //sets the rotation to backwards (twice the forwards amount)
+        LLBackRot = legLeft.transform.localRotation; // sets the back rot for later
 
-        legRight.transform.eulerAngles = new Vector3(legRight.transform.eulerAngles.x - 20, legRight.transform.eulerAngles.y, legRight.transform.eulerAngles.z);
+        //right leg starting rots
+        legRight.transform.eulerAngles = new Vector3(legRight.transform.eulerAngles.x - legSwing, legRight.transform.eulerAngles.y, legRight.transform.eulerAngles.z);
         LRBackRot = legRight.transform.localRotation;
-        legRight.transform.eulerAngles = new Vector3(legRight.transform.eulerAngles.x +40, legRight.transform.eulerAngles.y, legRight.transform.eulerAngles.z);
+        legRight.transform.eulerAngles = new Vector3(legRight.transform.eulerAngles.x +2*legSwing, legRight.transform.eulerAngles.y, legRight.transform.eulerAngles.z);
         LRForwardRot = legRight.transform.localRotation;
 
-        armLeft.transform.eulerAngles = new Vector3(armLeft.transform.eulerAngles.x , armLeft.transform.eulerAngles.y+20, armLeft.transform.eulerAngles.z+armDeclanation);
+        //left arm starting rots
+        armLeft.transform.eulerAngles = new Vector3(armLeft.transform.eulerAngles.x , armLeft.transform.eulerAngles.y+armSwing, armLeft.transform.eulerAngles.z+armDeclanation);
         ALBackRot = armLeft.transform.localRotation;
-        armLeft.transform.eulerAngles = new Vector3(armLeft.transform.eulerAngles.x, armLeft.transform.eulerAngles.y-40, armLeft.transform.eulerAngles.z);
+        armLeft.transform.eulerAngles = new Vector3(armLeft.transform.eulerAngles.x, armLeft.transform.eulerAngles.y-2*armSwing, armLeft.transform.eulerAngles.z);
         ALForwardRot = armLeft.transform.localRotation;
 
-        armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x, armRight.transform.eulerAngles.y +20, armRight.transform.eulerAngles.z - armDeclanation);
+        //right arm starting rots
+        armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x, armRight.transform.eulerAngles.y +armSwing, armRight.transform.eulerAngles.z - armDeclanation);
         ARForwardRot = armRight.transform.localRotation;
-        armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x, armRight.transform.eulerAngles.y -40, armRight.transform.eulerAngles.z );
+        armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x, armRight.transform.eulerAngles.y -2*armSwing, armRight.transform.eulerAngles.z );
         ARBackRot = armRight.transform.localRotation;
-
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (legLeft.transform.localRotation == LLBackRot) 
+        //left leg rotation changes
+        if (legLeft.transform.localRotation == LLBackRot)//checks for the same rotation as the back rot 
         {
-            LLTargetRot = LLForwardRot;
+            LLTargetRot = LLForwardRot;//sets target to the forward rot
         }
-        if (legLeft.transform.localRotation == LLForwardRot)
+        if (legLeft.transform.localRotation == LLForwardRot)//checks for the same rotaition as the forward rot
         {
-            LLTargetRot = LLBackRot;
+            LLTargetRot = LLBackRot;//sets it to the forward rot
         }
-
-        if(legRight.transform.localRotation == LRBackRot)
-        {
-            LRTargetRot = LRForwardRot;
-        }
+       
+        //right leg changes
         if (legRight.transform.localRotation == LRForwardRot)
         {
             LRTargetRot = LRBackRot;
         }
-
+        if (legRight.transform.localRotation == LRBackRot)
+        {
+            LRTargetRot = LRForwardRot;
+        }
+       
+        //left arm changes
         if(armLeft.transform.localRotation == ALBackRot)
         {
             ALTargetRot = ALForwardRot;
@@ -87,6 +95,7 @@ public class EnemyWalk : MonoBehaviour
             ALTargetRot = ALBackRot;
         }
 
+        //right arm changes
         if(armRight.transform.localRotation == ARBackRot)
         {
             ARTargetRot = ARForwardRot;
@@ -96,12 +105,10 @@ public class EnemyWalk : MonoBehaviour
             ARTargetRot = ARBackRot;
         }
 
-
-
-        legLeft.transform.localRotation = Quaternion.Lerp(legLeft.transform.localRotation, LLTargetRot, Time.deltaTime*speed); 
-        legRight.transform.localRotation = Quaternion.Lerp(legRight.transform.localRotation, LRTargetRot, Time.deltaTime * speed);
-        armLeft.transform.localRotation = Quaternion.Lerp(armLeft.transform.localRotation, ALTargetRot, Time.deltaTime * speed);
-        armRight.transform.localRotation = Quaternion.Lerp(armRight.transform.localRotation, ARTargetRot, Time.deltaTime * speed);
+        legLeft.transform.localRotation = Quaternion.Lerp(legLeft.transform.localRotation, LLTargetRot, Time.deltaTime*speed); //smoothly rotates the left leg beteween where it is and the target
+        legRight.transform.localRotation = Quaternion.Lerp(legRight.transform.localRotation, LRTargetRot, Time.deltaTime * speed);//right leg
+        armLeft.transform.localRotation = Quaternion.Lerp(armLeft.transform.localRotation, ALTargetRot, Time.deltaTime * speed);//left arm
+        armRight.transform.localRotation = Quaternion.Lerp(armRight.transform.localRotation, ARTargetRot, Time.deltaTime * speed);//right arm
 
     }
 }
