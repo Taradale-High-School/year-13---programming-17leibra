@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: GameView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -138,12 +138,12 @@ MonoBehaviour:
     height: 947
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 14}
-  - {fileID: 13}
   - {fileID: 11}
-  m_Selected: 0
+  - {fileID: 13}
+  m_Selected: 2
   m_LastSelected: 1
 --- !u!114 &7
 MonoBehaviour:
@@ -428,9 +428,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 17.501472, y: 3.5204566, z: -0.04937017}
+    m_Target: {x: 6.3797164, y: 0.49301648, z: 11.210955}
     speed: 2
-    m_Value: {x: 17.501472, y: 3.5204566, z: -0.04937017}
+    m_Value: {x: 6.3797164, y: 0.49301648, z: 11.210955}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -476,13 +476,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.1924639, y: -0.46969348, z: 0.105768755, w: 0.855175}
+    m_Target: {x: 0.3275525, y: -0.03256946, z: 0.011641528, w: 0.9443002}
     speed: 2
-    m_Value: {x: 0.1938898, y: -0.4682126, z: 0.10617382, w: 0.85551786}
+    m_Value: {x: 0.3275214, y: -0.03256637, z: 0.011640424, w: 0.9442106}
   m_Size:
-    m_Target: 1.5247447
+    m_Target: 2.7247446
     speed: 2
-    m_Value: 1.5247447
+    m_Value: 2.7247446
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -536,9 +536,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 82300000
       m_LastClickedID: 0
-      m_ExpandedIDs: b4d8ffffdc38000054390000
+      m_ExpandedIDs: 68fbffffdc38000054390000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -601,20 +601,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 60
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts
   m_LastFoldersGridSize: 60
   m_LastProjectPath: H:\GitHub\year-13---programming-17leibra\Year13GameBraydenLeicester
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: fe390000
-    m_LastClickedID: 14846
-    m_ExpandedIDs: 00000000c8390000ca39000000ca9a3b
+    m_SelectedIDs: 043a0000
+    m_LastClickedID: 14852
+    m_ExpandedIDs: 00000000ca390000cc39000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -642,7 +642,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c8390000ca390000
+    m_ExpandedIDs: 00000000ca390000cc390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

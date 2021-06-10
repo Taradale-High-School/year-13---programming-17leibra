@@ -76,13 +76,15 @@ public class EnemyWalk : MonoBehaviour
         }
        
         //right leg changes
-        if (legRight.transform.localRotation == LRForwardRot)
+        if (Quaternion.Angle(legRight.transform.localRotation, LRForwardRot)<0.1)
         {
             LRTargetRot = LRBackRot;
+            Debug.Log("LR target to back");
         }
-        if (legRight.transform.localRotation == LRBackRot)
+        if (Quaternion.Angle(legRight.transform.localRotation, LRBackRot) < 0.1)
         {
             LRTargetRot = LRForwardRot;
+            Debug.Log("LR target to forward");
         }
        
         //left arm changes
@@ -96,11 +98,11 @@ public class EnemyWalk : MonoBehaviour
         }
 
         //right arm changes
-        if(armRight.transform.localRotation == ARBackRot)
+        if(Quaternion.Angle(armRight.transform.localRotation, ARBackRot) < 0.1)
         {
             ARTargetRot = ARForwardRot;
         }
-        if(armRight.transform.localRotation == ARForwardRot)
+        if (Quaternion.Angle(armRight.transform.localRotation, ARForwardRot) < 0.1)
         {
             ARTargetRot = ARBackRot;
         }
