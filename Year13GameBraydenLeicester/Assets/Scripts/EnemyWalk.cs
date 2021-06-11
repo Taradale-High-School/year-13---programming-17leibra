@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyWalk : MonoBehaviour
 {
     //floats
-    float speed = 10;
+    float speed = 5;
     float armDeclanation = 20;
-    float legSwing = 20;
+    float legSwing = 10;
     float armSwing = 20;
+    float angleClose = 0.0001f;
 
     //object References
     public GameObject legLeft;
@@ -21,6 +22,7 @@ public class EnemyWalk : MonoBehaviour
     private Quaternion LRTargetRot;
     private Quaternion ALTargetRot;
     private Quaternion ARTargetRot;
+    private Quaternion swordTarget;
 
     //forward rots
     private Quaternion LLForwardRot;
@@ -34,9 +36,13 @@ public class EnemyWalk : MonoBehaviour
     private Quaternion ALBackRot;
     private Quaternion ARBackRot;
 
+    private EnemyBehaviour enemyBehaviour;
+
     // Start is called before the first frame update
     void Start()
     {
+        enemyBehaviour = GetComponentInParent<EnemyBehaviour>();
+
         //left leg starting rots
         legLeft.transform.eulerAngles = new Vector3(legLeft.transform.eulerAngles.x + legSwing, legLeft.transform.eulerAngles.y, legLeft.transform.eulerAngles.z); //sets rotation to foward
         LLForwardRot = legLeft.transform.localRotation; //sets the forward rot for later
@@ -56,6 +62,9 @@ public class EnemyWalk : MonoBehaviour
         ALForwardRot = armLeft.transform.localRotation;
 
         //right arm starting rots
+        armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x-10, armRight.transform.eulerAngles.y -70, armRight.transform.eulerAngles.z - 20);
+        swordTarget = armRight.transform.localRotation;
+        armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x + 10, armRight.transform.eulerAngles.y + 70, armRight.transform.eulerAngles.z + 20);
         armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x, armRight.transform.eulerAngles.y +armSwing, armRight.transform.eulerAngles.z - armDeclanation);
         ARForwardRot = armRight.transform.localRotation;
         armRight.transform.eulerAngles = new Vector3(armRight.transform.eulerAngles.x, armRight.transform.eulerAngles.y -2*armSwing, armRight.transform.eulerAngles.z );
@@ -66,45 +75,54 @@ public class EnemyWalk : MonoBehaviour
     void Update()
     {
         //left leg rotation changes
-        if (legLeft.transform.localRotation == LLBackRot)//checks for the same rotation as the back rot 
+        if (Quaternion.Angle(legLeft.transform.localRotation, LLBackRot) < angleClose)//checks for the same rotation as the back rot 
         {
             LLTargetRot = LLForwardRot;//sets target to the forward rot
         }
-        if (legLeft.transform.localRotation == LLForwardRot)//checks for the same rotaition as the forward rot
+        if (Quaternion.Angle(legLeft.transform.localRotation, LLForwardRot) < angleClose)//checks for the same rotaition as the forward rot
         {
             LLTargetRot = LLBackRot;//sets it to the forward rot
         }
        
         //right leg changes
-        if (Quaternion.Angle(legRight.transform.localRotation, LRForwardRot)<0.1)
+        if (Quaternion.Angle(legRight.transform.localRotation, LRForwardRot) < angleClose)
         {
             LRTargetRot = LRBackRot;
-            Debug.Log("LR target to back");
         }
-        if (Quaternion.Angle(legRight.transform.localRotation, LRBackRot) < 0.1)
+        if (Quaternion.Angle(legRight.transform.localRotation, LRBackRot) < angleClose)
         {
             LRTargetRot = LRForwardRot;
-            Debug.Log("LR target to forward");
         }
        
         //left arm changes
-        if(armLeft.transform.localRotation == ALBackRot)
+        if(Quaternion.Angle(armLeft.transform.localRotation, ALBackRot) < angleClose)
         {
             ALTargetRot = ALForwardRot;
         }
-        if(armLeft.transform.localRotation == ALForwardRot)
+        if(Quaternion.Angle(armLeft.transform.localRotation, ALForwardRot) < angleClose)
         {
             ALTargetRot = ALBackRot;
         }
 
         //right arm changes
-        if(Quaternion.Angle(armRight.transform.localRotation, ARBackRot) < 0.1)
+        if (!enemyBehaviour.playerClose)
         {
-            ARTargetRot = ARForwardRot;
+            if (Quaternion.Angle(armRight.transform.localRotation, ARBackRot) < angleClose)
+            {
+                ARTargetRot = ARForwardRot;
+            }
+            if (Quaternion.Angle(armRight.transform.localRotation, ARForwardRot) < angleClose)
+            {
+                ARTargetRot = ARBackRot;
+            }
+            if (Quaternion.Angle(armRight.transform.localRotation, swordTarget) < angleClose)
+            {
+                ARTargetRot = ARBackRot;
+            }
         }
-        if (Quaternion.Angle(armRight.transform.localRotation, ARForwardRot) < 0.1)
+        else 
         {
-            ARTargetRot = ARBackRot;
+            ARTargetRot = swordTarget;
         }
 
         legLeft.transform.localRotation = Quaternion.Lerp(legLeft.transform.localRotation, LLTargetRot, Time.deltaTime*speed); //smoothly rotates the left leg beteween where it is and the target
