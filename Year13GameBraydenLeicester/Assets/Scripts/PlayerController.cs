@@ -35,7 +35,9 @@ public class PlayerController : MonoBehaviour
     public Transform compass;
     public GameObject rightHand;
     public GameObject leftHand;
-
+    //Sword/sheild objects
+    public GameObject[] weapons;
+    public GameObject[] shields;
 
     // Start is called before the first frame update
     void Start()
