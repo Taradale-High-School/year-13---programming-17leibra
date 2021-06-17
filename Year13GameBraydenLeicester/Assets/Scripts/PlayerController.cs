@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Floats for the movements and more
-    private float moveSpeed = 5;
+    private float baseMoveSpeed = 5;
+    private float moveSpeed;
     private float xRotation = 0f;
     private float mouseSensitivity = 200f;
     public float gravityAccleration = -9.81f;
@@ -13,7 +14,10 @@ public class PlayerController : MonoBehaviour
     public float swingSpeed = 10f;
     public float sheildMoveSpeed = 10f;
     public float groundDistance = 0.3f;
-
+    private float baseBlockingDamage = 1;
+    private float blockingDamage;
+    private float baseSwordDamage;
+    private float swordDamage;
 
     //Position or rotaition initilaisers 
     private Vector3 velocity;
@@ -39,6 +43,14 @@ public class PlayerController : MonoBehaviour
     public GameObject[] weapons;
     public GameObject[] shields;
 
+    int weaponIndex = 0;
+    int oldWeaponIndex = 0;
+    float[] weaponDamage = new float[3];
+    int sheildIndex = 0;
+    int oldSheildIndex = 0;
+    float[] sheildDamageMod = new float[3];
+    float[] sheildSpeedMod = new float[3];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +61,21 @@ public class PlayerController : MonoBehaviour
         swordTargetRotation = rightHand.transform.localRotation;
         sheildStartingPosition = leftHand.transform.localPosition;
         sheildTargetPosition = leftHand.transform.localPosition;
+
+        weaponDamage[0] = 1;
+        weaponDamage[1] = 0.8f;
+        weaponDamage[2] = 1.2f;
+
+        sheildDamageMod[0] = 1;
+        sheildDamageMod[1] = 0.8f;
+        sheildDamageMod[2] = 1.2f;
+
+        sheildSpeedMod[0] = 1;
+        sheildSpeedMod[1] = 1.2f;
+        sheildSpeedMod[2] = 0.8f;
+
+        statChange();
+        objChange();
     }
 
     // Update is called once per frame
@@ -130,17 +157,35 @@ public class PlayerController : MonoBehaviour
         //moves the sheild smoothly (using lerp) to the target position (if the current position is the target, nothing changes)
         leftHand.transform.localPosition = Vector3.Lerp(leftHand.transform.localPosition, sheildTargetPosition, sheildMoveSpeed * Time.deltaTime);
 
+        //changes index
+        if (Input.GetKeyDown(KeyCode.Keypad1)) { sheildIndex = 0; }
+        if (Input.GetKeyDown(KeyCode.Keypad2)) { sheildIndex = 1; }
+        if (Input.GetKeyDown(KeyCode.Keypad3)) { sheildIndex = 2; }
+        if (Input.GetKeyDown(KeyCode.Keypad4)) { weaponIndex = 0; }
+        if (Input.GetKeyDown(KeyCode.Keypad5)) { weaponIndex = 1; }
+        if (Input.GetKeyDown(KeyCode.Keypad6)) { weaponIndex = 2; }
+        if( Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            statChange();
+            objChange();
+        }
 
     }
 
-    /*private void OnCollisionEnter(Collision collision)
+    void statChange()
     {
-        if (collision.gameObject.CompareTag("enemy"))
-        {
-            Debug.Log("Sword hit enemy");
-            Destroy(collision.gameObject);
-        }
-    }*/
-
+        moveSpeed = baseMoveSpeed * sheildSpeedMod[sheildIndex];
+        blockingDamage = baseBlockingDamage * sheildDamageMod[sheildIndex];
+        swordDamage = baseSwordDamage * weaponDamage[weaponIndex];
+    }
+    void objChange()
+    {
+        weapons[oldWeaponIndex].SetActive(false);
+        weapons[weaponIndex].SetActive(true);
+        oldWeaponIndex = weaponIndex;
+        weapons[oldSheildIndex].SetActive(false);
+        weapons[sheildIndex].SetActive(true);
+        oldSheildIndex = sheildIndex;
+    }
     
 }
