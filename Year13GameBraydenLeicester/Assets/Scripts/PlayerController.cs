@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     public GameObject leftHand;
     //Sword/sheild objects
     public GameObject[] weapons;
-    public GameObject[] shields;
+    public GameObject[] sheilds;
 
     int weaponIndex = 0;
     int oldWeaponIndex = 0;
@@ -71,8 +71,8 @@ public class PlayerController : MonoBehaviour
         sheildDamageMod[2] = 1.2f;
 
         sheildSpeedMod[0] = 1;
-        sheildSpeedMod[1] = 1.2f;
-        sheildSpeedMod[2] = 0.8f;
+        sheildSpeedMod[1] = 2f;
+        sheildSpeedMod[2] = 0.5f;
 
         statChange();
         objChange();
@@ -183,8 +183,8 @@ public class PlayerController : MonoBehaviour
         weapons[oldWeaponIndex].SetActive(false);
         weapons[weaponIndex].SetActive(true);
         oldWeaponIndex = weaponIndex;
-        weapons[oldSheildIndex].SetActive(false);
-        weapons[sheildIndex].SetActive(true);
+        sheilds[oldSheildIndex].SetActive(false);
+        sheilds[sheildIndex].SetActive(true);
         oldSheildIndex = sheildIndex;
     }
     

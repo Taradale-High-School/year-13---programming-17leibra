@@ -116,7 +116,7 @@ MonoBehaviour:
   m_MinSize: {x: 708, y: 471}
   m_MaxSize: {x: 18003, y: 14021}
   vertical: 0
-  controlID: 33
+  controlID: 15
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 471}
   m_MaxSize: {x: 10002, y: 14021}
   vertical: 1
-  controlID: 92
+  controlID: 64
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -428,9 +428,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -3.8670058, y: 1.9248338, z: -30.82375}
+    m_Target: {x: 85.416565, y: 47.61026, z: 51.604935}
     speed: 2
-    m_Value: {x: -3.8670058, y: 1.9248338, z: -30.82375}
+    m_Value: {x: 85.416565, y: 47.61026, z: 51.604935}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -476,20 +476,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.011982084, y: -0.9213118, z: 0.029130328, w: 0.38776758}
+    m_Target: {x: -0.0070337076, y: 0.9778847, z: 0.03377309, w: 0.20692195}
     speed: 2
-    m_Value: {x: 0.010857675, y: -0.92073345, z: 0.02634761, w: 0.3891501}
+    m_Value: {x: -0.0067225825, y: 0.97780454, z: 0.03230191, w: 0.20690481}
   m_Size:
-    m_Target: 0.6674753
+    m_Target: 92.93088
     speed: 2
-    m_Value: 0.6674753
+    m_Value: 97.30982
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 0.5
-    m_SpeedNormalized: 0.26999998
+    m_Speed: 2
+    m_SpeedNormalized: 1
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -536,9 +536,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a6370000
-      m_LastClickedID: 14246
-      m_ExpandedIDs: 68fbffff6c380000763800003a3900007c39000090390000
+      m_SelectedIDs: 14d3ffff
+      m_LastClickedID: -11500
+      m_ExpandedIDs: 0ef3ffff6c380000763800003a3900007c390000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -601,19 +601,19 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 60
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Prefabs
   m_LastFoldersGridSize: 60
   m_LastProjectPath: H:\GitHub\year-13---programming-17leibra\Year13GameBraydenLeicester
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 823b0000
-    m_LastClickedID: 15234
+    m_SelectedIDs: 7e3b0000
+    m_LastClickedID: 15230
     m_ExpandedIDs: 00000000463b0000483b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -694,7 +694,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 480}
     m_GridSize: 60
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 110
