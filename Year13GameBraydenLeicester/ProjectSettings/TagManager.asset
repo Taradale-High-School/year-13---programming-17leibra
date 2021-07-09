@@ -8,6 +8,8 @@ TagManager:
   - enemy
   - player
   - playerSheild
+  - enRapier
+  - enShortSword
   layers:
   - Default
   - TransparentFX

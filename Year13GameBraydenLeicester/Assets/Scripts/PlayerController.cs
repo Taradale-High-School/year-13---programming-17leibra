@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
     public Transform compass;
     public GameObject rightHand;
     public GameObject leftHand;
+    public GameObject canvas;
+    public NameEnteringScript nameEnteringScript;
+
+
     //Sword/sheild objects
     public GameObject[] weapons;
     public GameObject[] sheilds;
@@ -51,11 +55,15 @@ public class PlayerController : MonoBehaviour
     float[] sheildDamageMod = new float[3];
     float[] sheildSpeedMod = new float[3];
 
+    float mouseX;
+    float mouseY;
+    float xMove;
+    float zMove;
+
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; // locks and hides the mouse cursor
-        
+        nameEnteringScript = canvas.GetComponent<NameEnteringScript>();
         //sets starting positions and rotations
         swordStartingRotation = rightHand.transform.localRotation;
         swordTargetRotation = rightHand.transform.localRotation;
@@ -97,10 +105,32 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = -2f;
         }
+       
+        
+        if (nameEnteringScript.startGame)//to stop movement before name is chosen
+        {
+            //gets mouse position
+            mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        //gets mouse position
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            //Wasd inputs and scaled to speeds
+            xMove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+            zMove = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+            
+            //Right Click and at ready rot, the target rotation of the sword changes
+            if (Input.GetButtonDown("Fire2") && rightHand.transform.localRotation == swordStartingRotation)
+            {
+                swordTargetRotation *= Quaternion.AngleAxis(90, Vector3.right);
+                swordTargetRotation *= Quaternion.AngleAxis(30, Vector3.forward);
+            }
+
+            //left click and a ready pos, the target position of the sheild changes
+            if (Input.GetButtonDown("Fire1") && leftHand.transform.localPosition == sheildStartingPosition)
+            {
+                sheildTargetPosition = new Vector3(leftHand.transform.localPosition.x + 0.2f, leftHand.transform.localPosition.y + 0.2f, leftHand.transform.localPosition.z);
+            }
+        }
+
 
         transform.Rotate(Vector3.up * mouseX); //rotates player around y axis due to x pos of mouse
         compass.Rotate(Vector3.forward * -mouseX);// roates the comapass 
@@ -110,9 +140,7 @@ public class PlayerController : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         
-        //Wasd inputs and scaled to speeds
-        float xMove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        float zMove = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        
         
         Vector3 totalMove = transform.right * xMove + transform.forward * zMove; // makes a vector3 to move through
 
@@ -127,19 +155,7 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravityAccleration * Time.deltaTime;//makes gravity as using character controller not rigid body
         controller.Move(velocity * Time.deltaTime);// moves character with gravity 
 
-        //Right Click and at ready rot, the target rotation of the sword changes
-        if (Input.GetButtonDown("Fire2") && rightHand.transform.localRotation == swordStartingRotation)
-        {
-            swordTargetRotation *= Quaternion.AngleAxis(90, Vector3.right);
-            swordTargetRotation *= Quaternion.AngleAxis(30, Vector3.forward);
-        }
-
-        //left click and a ready pos, the target position of the sheild changes
-        if (Input.GetButtonDown("Fire1") && leftHand.transform.localPosition == sheildStartingPosition)
-        {
-            sheildTargetPosition = new Vector3(leftHand.transform.localPosition.x + 0.2f, leftHand.transform.localPosition.y + 0.2f, leftHand.transform.localPosition.z); 
-        }
-
+       
 
         //resest target rot/pos to starting ones once swing/movement is finished
         if (rightHand.transform.localRotation == swordTargetRotation)
