@@ -12,7 +12,7 @@ public class SwordHitScript : MonoBehaviour
     //Other Variables
     private Quaternion startRot;
     public bool isSwinging;
-   
+    float baseDmg = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,15 +35,20 @@ public class SwordHitScript : MonoBehaviour
         if (other.CompareTag("enemy") && isSwinging)
         {
             Debug.Log("Sword hit enemy");
-            Destroy(other.gameObject); //destroys the enemies
+            EnemyBehaviour script = other.GetComponentInParent<EnemyBehaviour>();
+            float toTake = 2f * playerScript.swordDamage;
+            script.damage(toTake);
         }
         if (other.CompareTag("player") && isSwinging && !playerScript.isBlocking)
         {
             Debug.Log("Enemy Sword hit player, not blocking");
+            playerScript.takeDamage(baseDmg);
         }
         if (other.CompareTag("player") && isSwinging && playerScript.isBlocking)
         {
             Debug.Log("Enemy Sword hit player, is blocking");
+            float dmg = baseDmg * playerScript.blockingDamage;
+            playerScript.takeDamage(dmg);
         }
     }
 }

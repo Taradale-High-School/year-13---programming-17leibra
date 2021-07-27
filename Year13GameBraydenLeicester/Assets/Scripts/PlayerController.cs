@@ -15,9 +15,11 @@ public class PlayerController : MonoBehaviour
     public float sheildMoveSpeed = 10f;
     public float groundDistance = 0.3f;
     private float baseBlockingDamage = 1;
-    private float blockingDamage;
-    private float baseSwordDamage;
-    private float swordDamage;
+    public float blockingDamage;
+    private float baseSwordDamage=1f;
+    public float swordDamage;
+    public float health;
+    float maxHealth = 20;
 
     //Position or rotaition initilaisers 
     private Vector3 velocity;
@@ -25,10 +27,11 @@ public class PlayerController : MonoBehaviour
     private Quaternion swordStartingRotation;
     private Vector3 sheildTargetPosition;
     private Vector3 sheildStartingPosition;
+    Vector3 hbStartPos;
 
     
     //Bools for logic
-    public bool isGronded;
+    public bool isGrounded;
     public bool isBlocking;
 
     //Object refeferences 
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
     public GameObject leftHand;
     public GameObject canvas;
     public NameEnteringScript nameEnteringScript;
+    public GameObject healthBar; 
 
 
     //Sword/sheild objects
@@ -63,6 +67,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hbStartPos = healthBar.transform.position;
+        health = maxHealth;
         nameEnteringScript = canvas.GetComponent<NameEnteringScript>();
         //sets starting positions and rotations
         swordStartingRotation = rightHand.transform.localRotation;
@@ -70,26 +76,35 @@ public class PlayerController : MonoBehaviour
         sheildStartingPosition = leftHand.transform.localPosition;
         sheildTargetPosition = leftHand.transform.localPosition;
 
-        weaponDamage[0] = 1;
-        weaponDamage[1] = 0.8f;
-        weaponDamage[2] = 1.2f;
+        weaponDamage[0] = 1f;
+        weaponDamage[1] = 1.5f;
+        weaponDamage[2] = 3f;
 
-        sheildDamageMod[0] = 1;
-        sheildDamageMod[1] = 0.8f;
-        sheildDamageMod[2] = 1.2f;
+        sheildDamageMod[0] = 0.8f;
+        sheildDamageMod[1] = 1f;
+        sheildDamageMod[2] = 0.6f;
 
-        sheildSpeedMod[0] = 1;
+        sheildSpeedMod[0] = 1f;
         sheildSpeedMod[1] = 2f;
         sheildSpeedMod[2] = 0.5f;
 
         statChange();
         objChange();
+        StartCoroutine(healthRegen());
     }
 
     // Update is called once per frame
     void Update()
     {
-        isGronded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);//check for ground with a sphere 
+       if (health <= 0)
+        {
+            canvas.transform.Find("GameOverForm").gameObject.SetActive(true);
+        }else if(health> maxHealth) 
+        { 
+            health = maxHealth;
+            healthBar.transform.position = hbStartPos;
+        }
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);//check for ground with a sphere 
         
         //Checks for blocking
         if (leftHand.transform.localPosition == sheildStartingPosition)
@@ -101,11 +116,10 @@ public class PlayerController : MonoBehaviour
         }
         
         //resets downward velocity if grounded
-        if (isGronded && velocity.y<0)
+        if (isGrounded && velocity.y<0)
         {
             velocity.y = -2f;
         }
-       
         
         if (nameEnteringScript.startGame)//to stop movement before name is chosen
         {
@@ -148,7 +162,7 @@ public class PlayerController : MonoBehaviour
 
        
         //Jump Controls
-        if (Input.GetButtonDown("Jump") && isGronded)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityAccleration);
         }
@@ -204,4 +218,27 @@ public class PlayerController : MonoBehaviour
         oldSheildIndex = sheildIndex;
     }
     
+    public void takeDamage(float toTake)
+    {
+        health -= toTake;
+        healthBar.transform.position +=new Vector3(-16.5f * toTake,0,0);
+    }
+
+    IEnumerator healthRegen()
+    {
+        while (true)
+        {
+            if (health < maxHealth && health > 0)
+            {
+                yield return new WaitForSeconds(2);
+                health+=1;
+                healthBar.transform.position += new Vector3(16.5f, 0, 0);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
 }
+

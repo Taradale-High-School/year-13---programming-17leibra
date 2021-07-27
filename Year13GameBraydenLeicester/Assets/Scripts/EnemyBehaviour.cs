@@ -24,7 +24,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float enemyMoveSpeed;
     public float playerRange;
     public float swingSpeed;
-
+    public float health = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +38,8 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (body == null)
+        Debug.Log("health = " + health);
+        if (health < 0)
         {
             Destroy(gameObject);// destorys the whole enemy game object if the body gets destroyed, by a sword
         }
@@ -79,6 +80,11 @@ public class EnemyBehaviour : MonoBehaviour
         hand.transform.localRotation = Quaternion.Lerp(hand.transform.localRotation, swordTargetRotation, swingSpeed * Time.deltaTime);
 
 
+    }
+    public void damage(float toTake)
+    {
+        Debug.Log("have taken damage");
+        health -= toTake;
     }
 
     
