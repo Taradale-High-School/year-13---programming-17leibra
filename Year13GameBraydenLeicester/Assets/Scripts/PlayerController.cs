@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,6 +64,15 @@ public class PlayerController : MonoBehaviour
     float mouseY;
     float xMove;
     float zMove;
+    
+
+    //bools for having bought the items
+    public bool allowSS;
+    public bool allowLS;
+    public bool allowR;
+    public bool allowK;
+
+    public Text goldAmmount;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +98,8 @@ public class PlayerController : MonoBehaviour
         sheildSpeedMod[1] = 2f;
         sheildSpeedMod[2] = 0.5f;
 
+        goldAmmount.text = "70";
+
         statChange();
         objChange();
         StartCoroutine(healthRegen());
@@ -96,7 +108,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (health <= 0)
+        if (health <= 0)
         {
             canvas.transform.Find("GameOverForm").gameObject.SetActive(true);
         }else if(health> maxHealth) 
@@ -187,17 +199,19 @@ public class PlayerController : MonoBehaviour
         //moves the sheild smoothly (using lerp) to the target position (if the current position is the target, nothing changes)
         leftHand.transform.localPosition = Vector3.Lerp(leftHand.transform.localPosition, sheildTargetPosition, sheildMoveSpeed * Time.deltaTime);
 
+        bool hasChanged = false;
         //changes index
-        if (Input.GetKeyDown(KeyCode.Keypad1)) { sheildIndex = 0; }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) { sheildIndex = 1; }
-        if (Input.GetKeyDown(KeyCode.Keypad3)) { sheildIndex = 2; }
-        if (Input.GetKeyDown(KeyCode.Keypad4)) { weaponIndex = 0; }
-        if (Input.GetKeyDown(KeyCode.Keypad5)) { weaponIndex = 1; }
-        if (Input.GetKeyDown(KeyCode.Keypad6)) { weaponIndex = 2; }
-        if( Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Keypad6))
+        if (Input.GetKeyDown(KeyCode.Keypad1)) { sheildIndex = 0; hasChanged = true; }
+        if (Input.GetKeyDown(KeyCode.Keypad2) &&allowSS) { sheildIndex = 1; hasChanged = true; }
+        if (Input.GetKeyDown(KeyCode.Keypad3) && allowLS) { sheildIndex = 2; hasChanged = true; }
+        if (Input.GetKeyDown(KeyCode.Keypad4)) { weaponIndex = 0; hasChanged = true; }
+        if (Input.GetKeyDown(KeyCode.Keypad5) && allowR) { weaponIndex = 1; hasChanged = true; }
+        if (Input.GetKeyDown(KeyCode.Keypad6) && allowK) { weaponIndex = 2; hasChanged = true; }
+        if(hasChanged)
         {
             statChange();
             objChange();
+            hasChanged = false;
         }
 
     }
@@ -218,6 +232,13 @@ public class PlayerController : MonoBehaviour
         oldSheildIndex = sheildIndex;
     }
     
+    public void goldChange(int toChange)
+    {
+        int goldNum = int.Parse(goldAmmount.text);
+        goldNum += toChange;
+        goldAmmount.text = goldNum.ToString();
+    }
+
     public void takeDamage(float toTake)
     {
         health -= toTake;

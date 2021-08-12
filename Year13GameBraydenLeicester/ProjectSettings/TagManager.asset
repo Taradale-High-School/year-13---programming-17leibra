@@ -10,6 +10,10 @@ TagManager:
   - playerSheild
   - enRapier
   - enShortSword
+  - ShopSmall Shield
+  - ShopLarge Shield
+  - ShopRapier
+  - ShopKatana
   layers:
   - Default
   - TransparentFX

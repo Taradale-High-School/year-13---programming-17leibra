@@ -10,6 +10,7 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject playerObject;
     public GameObject[] markers;
     public Rigidbody rb;
+    PlayerController playerScript;
 
     //Position var
     private Vector3 targetPosition;
@@ -33,6 +34,7 @@ public class EnemyBehaviour : MonoBehaviour
         targetPosition = body.transform.position;
         swordStartingRotation = hand.transform.localRotation;
         swordTargetRotation = hand.transform.localRotation;
+        playerScript = playerObject.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -42,6 +44,8 @@ public class EnemyBehaviour : MonoBehaviour
         if (health < 0)
         {
             Destroy(gameObject);// destorys the whole enemy game object if the body gets destroyed, by a sword
+            playerScript.goldChange(5);
+
         }
         float playerDist = Vector3.Distance(body.transform.position, playerObject.transform.position); // gets distance to player
         if (playerDist < playerRange) { playerClose = true; } else { playerClose = false; }// decides if the player is in range
