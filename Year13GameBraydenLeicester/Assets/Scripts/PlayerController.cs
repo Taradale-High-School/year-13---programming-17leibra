@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         hbStartPos = healthBar.transform.position;
         health = maxHealth;
         nameEnteringScript = canvas.GetComponent<NameEnteringScript>();
@@ -133,8 +134,8 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
         }
         
-        if (nameEnteringScript.startGame)//to stop movement before name is chosen
-        {
+       // if (nameEnteringScript.startGame)//to stop movement before name is chosen
+        //{
             //gets mouse position
             mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviour
             {
                 sheildTargetPosition = new Vector3(leftHand.transform.localPosition.x + 0.2f, leftHand.transform.localPosition.y + 0.2f, leftHand.transform.localPosition.z);
             }
-        }
+      //  }
 
 
         transform.Rotate(Vector3.up * mouseX); //rotates player around y axis due to x pos of mouse
