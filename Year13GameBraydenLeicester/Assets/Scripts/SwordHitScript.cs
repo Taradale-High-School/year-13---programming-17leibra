@@ -18,6 +18,7 @@ public class SwordHitScript : MonoBehaviour
     void Start()
     {
         //sets variables
+        hand = transform.parent.gameObject;
         startRot = hand.transform.localRotation;
         playerScript = player.GetComponent<PlayerController>();
     }

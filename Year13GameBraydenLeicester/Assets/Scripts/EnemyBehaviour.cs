@@ -30,6 +30,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         rb = body.GetComponent<Rigidbody>();
+        playerObject = GameObject.Find("Player");
         startingPosition = body.transform.position;
         targetPosition = body.transform.position;
         swordStartingRotation = hand.transform.localRotation;
@@ -40,7 +41,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("health = " + health);
+
         if (health < 0)
         {
             Destroy(gameObject);// destorys the whole enemy game object if the body gets destroyed, by a sword
@@ -54,7 +55,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (Vector3.Distance(body.transform.position, targetPosition) < 1f && !playerClose) //LERP never gets to position, so just needs to be close
         {
             int chosenMaker = Random.Range(0, markers.Length); //gets a random index 
-            Debug.Log(chosenMaker);
             targetPosition = markers[chosenMaker].transform.position; // sets target as position of marker
             body.transform.LookAt(markers[chosenMaker].transform);//turns towards marker
            
