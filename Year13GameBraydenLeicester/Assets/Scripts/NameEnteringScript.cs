@@ -14,32 +14,36 @@ public class NameEnteringScript : MonoBehaviour
     public GameObject gameOverForm; // for the game over gameobject
     public bool startGame = false; // startGame is false and is accessed by other scripts to tell them to start
     public Text nameWrongText; //text box for prompting user for a new name
-
+    public GameObject imageCursor; //object of the cursor
     // Start is called before the first frame update
     void Start()
     {
+        submitNameButton.interactable = true; //makes the button interactable
         submitNameButton.onClick.AddListener(NameSet); // adds a listener to the button
     }   
 
     // Update is called once per frame
     void Update()
     {
-           
+           //if the name is correct
             if (startGame) 
             {
                 nameForm.SetActive(false);/*gets rid of the name enter form*/
                 Cursor.lockState = CursorLockMode.Locked; // locks and hides the mouse cursor
-
+                imageCursor.SetActive(true);// shows the crosshairs
             }
     }
 
+    //called when the button is clicked
     void NameSet()
     {
+        Debug.Log("button clicked");
         playerName = nameEnterField.text; // sets player name to the value of the field
         print("name is " + playerName);
         startGame = NameCheck(playerName); ; // sets start game to true if the name is valid so the other scripts can start running
     }
 
+    //called by nameset to check the name for requirements
     bool NameCheck(string nameToCheck)
     {
         //Initialising variables for the method

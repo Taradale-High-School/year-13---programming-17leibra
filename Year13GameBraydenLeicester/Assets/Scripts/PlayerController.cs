@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //Floats for the movements and more
+    //Floats for the movements 
     private float baseMoveSpeed = 5;
     private float moveSpeed;
     private float xRotation = 0f;
@@ -15,6 +15,12 @@ public class PlayerController : MonoBehaviour
     public float swingSpeed = 10f;
     public float sheildMoveSpeed = 10f;
     public float groundDistance = 0.3f;
+    float mouseX;
+    float mouseY;
+    float xMove;
+    float zMove;
+
+    //damage/health floats
     private float baseBlockingDamage = 1;
     public float blockingDamage;
     private float baseSwordDamage=1f;
@@ -28,9 +34,9 @@ public class PlayerController : MonoBehaviour
     private Quaternion swordStartingRotation;
     private Vector3 sheildTargetPosition;
     private Vector3 sheildStartingPosition;
-    Vector3 hbStartPos;
+    private Vector3 hbStartPos;
+    private Vector3 characterStartPos;
 
-    
     //Bools for logic
     public bool isGrounded;
     public bool isBlocking;
@@ -45,13 +51,16 @@ public class PlayerController : MonoBehaviour
     public GameObject leftHand;
     public GameObject canvas;
     public NameEnteringScript nameEnteringScript;
-    public GameObject healthBar; 
+    public GameObject healthBar;
+    public GameObject gameOverForm;
+    public Text gameOverText;
+    public Text goldAmmount;
 
-
-    //Sword/sheild objects
+    //Sword/sheild object arrays
     public GameObject[] weapons;
     public GameObject[] sheilds;
 
+    //object change details
     int weaponIndex = 0;
     int oldWeaponIndex = 0;
     float[] weaponDamage = new float[3];
@@ -60,24 +69,16 @@ public class PlayerController : MonoBehaviour
     float[] sheildDamageMod = new float[3];
     float[] sheildSpeedMod = new float[3];
 
-    float mouseX;
-    float mouseY;
-    float xMove;
-    float zMove;
-    
-
     //bools for having bought the items
     public bool allowSS;
     public bool allowLS;
     public bool allowR;
     public bool allowK;
 
-    public Text goldAmmount;
-
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+       // Cursor.lockState = CursorLockMode.Locked;
         hbStartPos = healthBar.transform.position;
         health = maxHealth;
         nameEnteringScript = canvas.GetComponent<NameEnteringScript>();
@@ -86,7 +87,8 @@ public class PlayerController : MonoBehaviour
         swordTargetRotation = rightHand.transform.localRotation;
         sheildStartingPosition = leftHand.transform.localPosition;
         sheildTargetPosition = leftHand.transform.localPosition;
-
+        characterStartPos = transform.position;
+        //sets the id's of 
         weaponDamage[0] = 1f;
         weaponDamage[1] = 1.5f;
         weaponDamage[2] = 3f;
@@ -111,12 +113,15 @@ public class PlayerController : MonoBehaviour
     {
         if (health <= 0)
         {
-            canvas.transform.Find("GameOverForm").gameObject.SetActive(true);
+            gameOver("You died.");
         }else if(health> maxHealth) 
         { 
             health = maxHealth;
             healthBar.transform.position = hbStartPos;
         }
+
+        if (transform.position.y < (characterStartPos.y - 1f)) { gameOver("You Fell"); }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);//check for ground with a sphere 
         
         //Checks for blocking
@@ -134,8 +139,8 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
         }
         
-       // if (nameEnteringScript.startGame)//to stop movement before name is chosen
-        //{
+       if (nameEnteringScript.startGame)//to stop movement before name is chosen
+       {
             //gets mouse position
             mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -156,7 +161,7 @@ public class PlayerController : MonoBehaviour
             {
                 sheildTargetPosition = new Vector3(leftHand.transform.localPosition.x + 0.2f, leftHand.transform.localPosition.y + 0.2f, leftHand.transform.localPosition.z);
             }
-      //  }
+       }
 
 
         transform.Rotate(Vector3.up * mouseX); //rotates player around y axis due to x pos of mouse
@@ -261,6 +266,11 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
         }
+    }
+    public void gameOver(string message)
+    {
+        gameOverForm.SetActive(true);
+        gameOverText.text ="Game Over: " +message;
     }
 }
 

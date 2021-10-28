@@ -18,7 +18,7 @@ public class SwordHitScript : MonoBehaviour
     void Start()
     {
         //sets variables
-        hand = transform.parent.gameObject;
+        //hand = transform.parent.gameObject;
         startRot = hand.transform.localRotation;
         playerScript = player.GetComponent<PlayerController>();
     }
@@ -30,26 +30,27 @@ public class SwordHitScript : MonoBehaviour
         if (startRot == hand.transform.localRotation) { isSwinging = false; }else if(startRot != hand.transform.localRotation) { isSwinging = true; }
     }
 
+    //called when the sword collider hits something
     private void OnTriggerEnter(Collider other)
     {
-        //compares the tags and decides what to print out. 
+        //compares the tags and decides what is being hit. 
         if (other.CompareTag("enemy") && isSwinging)
-        {
-            Debug.Log("Sword hit enemy");
-            EnemyBehaviour script = other.GetComponentInParent<EnemyBehaviour>();
-            float toTake = 2f * playerScript.swordDamage;
-            script.damage(toTake);
+        { //^hitting enemy
+            Debug.Log("Sword hit enemy"); 
+            EnemyBehaviour script = other.GetComponentInParent<EnemyBehaviour>(); // gets that enemies behaviour script
+            float toTake = 2f * playerScript.swordDamage; //sets the damage based on the sword in use
+            script.damage(toTake); //makes the enemy health decrease (+ as no health regen on them)
         }
         if (other.CompareTag("player") && isSwinging && !playerScript.isBlocking)
-        {
+        {//^ hit the player and player is not blocking
             Debug.Log("Enemy Sword hit player, not blocking");
-            playerScript.takeDamage(baseDmg);
+            playerScript.takeDamage(baseDmg);//makes the player take damage
         }
         if (other.CompareTag("player") && isSwinging && playerScript.isBlocking)
-        {
+        {//^ hit the player and player is blocking
             Debug.Log("Enemy Sword hit player, is blocking");
-            float dmg = baseDmg * playerScript.blockingDamage;
-            playerScript.takeDamage(dmg);
+            float dmg = baseDmg * playerScript.blockingDamage; //changes the damge based on the shield
+            playerScript.takeDamage(dmg);// makes the player take the changed amount of damage
         }
     }
 }

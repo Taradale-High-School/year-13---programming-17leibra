@@ -26,28 +26,31 @@ public class EnemyBehaviour : MonoBehaviour
     public float playerRange;
     public float swingSpeed;
     public float health = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
+        //sets objects
         rb = body.GetComponent<Rigidbody>();
         playerObject = GameObject.Find("Player");
+        playerScript = playerObject.GetComponent<PlayerController>();
+        //sets position
         startingPosition = body.transform.position;
         targetPosition = body.transform.position;
         swordStartingRotation = hand.transform.localRotation;
         swordTargetRotation = hand.transform.localRotation;
-        playerScript = playerObject.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (health < 0)
         {
             Destroy(gameObject);// destorys the whole enemy game object if the body gets destroyed, by a sword
-            playerScript.goldChange(5);
+            playerScript.goldChange(5); //adds gold to the player
 
         }
+        
         float playerDist = Vector3.Distance(body.transform.position, playerObject.transform.position); // gets distance to player
         if (playerDist < playerRange) { playerClose = true; } else { playerClose = false; }// decides if the player is in range
 
@@ -57,7 +60,6 @@ public class EnemyBehaviour : MonoBehaviour
             int chosenMaker = Random.Range(0, markers.Length); //gets a random index 
             targetPosition = markers[chosenMaker].transform.position; // sets target as position of marker
             body.transform.LookAt(markers[chosenMaker].transform);//turns towards marker
-           
         }
         else if (playerClose)
         {
@@ -65,7 +67,6 @@ public class EnemyBehaviour : MonoBehaviour
             targetPosition = playerObject.transform.position;// sets target position to its own position to cancel LERP
         }
         body.transform.position = Vector3.Lerp(body.transform.position, targetPosition, Time.deltaTime * enemyMoveSpeed); // moves the body to the target pos smoothly
-        
 
         //player close and at ready rot, the target rotation of the sword changes
         if (playerClose && hand.transform.localRotation == swordStartingRotation)
@@ -83,13 +84,12 @@ public class EnemyBehaviour : MonoBehaviour
         //rotates the sword smoothly (using lerp) to the target rotation (if the current rotation is the target, nothing changes)
         hand.transform.localRotation = Quaternion.Lerp(hand.transform.localRotation, swordTargetRotation, swingSpeed * Time.deltaTime);
 
-
     }
+
+    //called by sword hit script when the ememy is hit by a sword
     public void damage(float toTake)
     {
         Debug.Log("have taken damage");
-        health -= toTake;
+        health -= toTake;//subtracts the health from the sword
     }
-
-    
 }
